@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  jellyfin:
+  - apiVersion: v2
+    appVersion: 10.9.1
+    created: "2024-09-06T08:15:10.640393822Z"
+    description: Jellyfin Media Server
+    digest: 49636a96619d1921e768e3bb8b69dfb44aa3c12577164cf4b54e3c4ca88d600f
+    home: https://jellyfin.org/
+    icon: https://jellyfin.org/images/logo.svg
+    keywords:
+    - jellyfin
+    - media
+    - self-hosted
+    name: jellyfin
+    type: application
+    urls:
+    - https://github.com/Supporterino/jellyfin-helm/releases/download/10.9.1/jellyfin-10.9.1.tgz
+    version: 10.9.1
+generated: "2024-09-06T08:15:10.640402779Z"
