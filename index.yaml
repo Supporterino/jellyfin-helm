@@ -18,6 +18,22 @@ entries:
     - https://github.com/Supporterino/jellyfin-helm/releases/download/10.9.1/jellyfin-10.9.1.tgz
     version: 10.9.1
   - apiVersion: v2
+    appVersion: 1.2.3
+    created: "2024-09-09T14:26:32.054738153Z"
+    description: Jellyfin Media Server
+    digest: 8965f085f76982a5639ece58cb7f4657d33d9cec19690ec4b4842504a8d0b98b
+    home: https://jellyfin.org/
+    icon: https://jellyfin.org/images/logo.svg
+    keywords:
+    - jellyfin
+    - media
+    - self-hosted
+    name: jellyfin
+    type: application
+    urls:
+    - https://github.com/Supporterino/jellyfin-helm/releases/download/jellyfin-1.6.0/jellyfin-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     appVersion: 11.1.1
     created: "2024-09-09T14:13:36.444759166Z"
     description: Jellyfin Media Server
@@ -33,4 +49,4 @@ entries:
     urls:
     - https://github.com/Supporterino/jellyfin-helm/releases/download/jellyfin-1.5.0/jellyfin-1.5.0.tgz
     version: 1.5.0
-generated: "2024-09-09T14:13:36.444767191Z"
+generated: "2024-09-09T14:26:32.054748863Z"
