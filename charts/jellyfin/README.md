@@ -1,6 +1,6 @@
 # jellyfin
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.10.6](https://img.shields.io/badge/AppVersion-10.10.6-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 10.10.7](https://img.shields.io/badge/AppVersion-10.10.7-informational?style=flat-square)
 
 A Helm chart for Jellyfin Media Server
 
@@ -53,6 +53,7 @@ helm install my-jellyfin jellyfin/jellyfin -f values.yaml
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for pod scheduling. |
+| deploymentAnnotations | object | `{}` | Annotations to add to the deployment. |
 | deploymentStrategy | object | `{"type":"RollingUpdate"}` | Deployment strategy configuration. See `kubectl explain deployment.spec.strategy`. |
 | extraContainers | list | `[]` | additional sidecar containers to run inside the pod. |
 | extraInitContainers | list | `[]` | additional init containers to run inside the pod. |
@@ -67,8 +68,8 @@ helm install my-jellyfin jellyfin/jellyfin -f values.yaml
 | jellyfin.enableDLNA | bool | `false` | Enable DLNA. Requires host network. See: https://jellyfin.org/docs/general/networking/dlna.html |
 | jellyfin.env | list | `[]` | Additional environment variables for the container. |
 | livenessProbe | object | `{"initialDelaySeconds":10,"tcpSocket":{"port":"http"}}` | Configure liveness probe for Jellyfin. |
-| metrics | object | `{"command":["bash","-c","sed 's,<EnableMetrics>false</EnableMetrics>,<EnableMetrics>true</EnableMetrics>,' -i /config/config/system.xml && /jellyfin/jellyfin"],"enabled":false,"serviceMonitor":{"enabled":false,"interval":"30s","labels":{},"metricRelabelings":[],"namespace":"","path":"/metrics","port":8096,"relabelings":[],"scheme":"http","scrapeTimeout":"30s","targetLabels":[],"tlsConfig":{}}}` | Configuration for metrics collection and monitoring |
-| metrics.enabled | bool | `false` | Enable or disable metrics collection - Ensure you have started and configured your Jellyfin instance first as this will fail if system.xml does not exist yet. |
+| metrics | object | `{"enabled":false,"serviceMonitor":{"enabled":false,"interval":"30s","labels":{},"metricRelabelings":[],"namespace":"","path":"/metrics","port":8096,"relabelings":[],"scheme":"http","scrapeTimeout":"30s","targetLabels":[],"tlsConfig":{}}}` | Configuration for metrics collection and monitoring |
+| metrics.enabled | bool | `false` | Enable or disable metrics collection |
 | metrics.serviceMonitor | object | `{"enabled":false,"interval":"30s","labels":{},"metricRelabelings":[],"namespace":"","path":"/metrics","port":8096,"relabelings":[],"scheme":"http","scrapeTimeout":"30s","targetLabels":[],"tlsConfig":{}}` | Configuration for the Prometheus ServiceMonitor |
 | metrics.serviceMonitor.enabled | bool | `false` | Enable or disable the creation of a ServiceMonitor resource |
 | metrics.serviceMonitor.interval | string | `"30s"` | Interval at which metrics should be scraped |
@@ -89,14 +90,17 @@ helm install my-jellyfin jellyfin/jellyfin -f values.yaml
 | persistence.config.enabled | bool | `true` | set to false to use emptyDir |
 | persistence.config.size | string | `"5Gi"` |  |
 | persistence.config.storageClass | string | `""` | If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |
-| persistence.media.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.media.accessMode | string | `"ReadWriteOnce"` | PVC specific settings, only used if type is 'pvc'. |
 | persistence.media.annotations | object | `{}` | Custom annotations to be added to the PVC |
 | persistence.media.enabled | bool | `true` | set to false to use emptyDir |
+| persistence.media.hostPath | string | `""` | Path on the host node for media storage, only used if type is 'hostPath'. |
 | persistence.media.size | string | `"25Gi"` |  |
 | persistence.media.storageClass | string | `""` | If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |
+| persistence.media.type | string | `"pvc"` | Type of volume for media storage (pvc, hostPath, emptyDir). If 'enabled' is false, 'emptyDir' is used regardless of this setting. |
 | podAnnotations | object | `{}` | Annotations to add to the pod. |
 | podLabels | object | `{}` | Additional labels to add to the pod. |
 | podSecurityContext | object | `{}` | Security context for the pod. |
+| priorityClassName | string | `""` | Define a priorityClassName for the pod. |
 | readinessProbe | object | `{"initialDelaySeconds":10,"tcpSocket":{"port":"http"}}` | Configure readiness probe for Jellyfin. |
 | replicaCount | int | `1` | Number of Jellyfin replicas to start. Should be left at 1. |
 | resources | object | `{}` | Resource requests and limits for the Jellyfin container. |
